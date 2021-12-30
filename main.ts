@@ -3,6 +3,7 @@ input.onButtonPressed(Button.A, function () {
 })
 input.onButtonPressed(Button.AB, function () {
     子彈 = game.createSprite(主角.get(LedSpriteProperty.X), 主角.get(LedSpriteProperty.Y))
+    music.playTone(262, music.beat(BeatFraction.Whole))
     for (let index = 0; index < 4; index++) {
         子彈.change(LedSpriteProperty.Y, -1)
         basic.pause(200)
@@ -39,12 +40,10 @@ basic.forever(function () {
     }
 })
 basic.forever(function () {
-    music.stopAllSounds()
-    music.playMelody("A G E G D C5 E F ", 120)
-})
-basic.forever(function () {
     if (飛機.isTouching(主角)) {
         game.gameOver()
+        music.stopAllSounds()
+        music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)
     }
     if (子彈) {
         if (子彈.isTouching(飛機)) {
@@ -57,7 +56,9 @@ basic.forever(function () {
 })
 basic.forever(function () {
     if (飛機2.isTouching(主角)) {
+        music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)
         game.gameOver()
+        music.stopAllSounds()
     }
     if (子彈) {
         if (子彈.isTouching(飛機2)) {
